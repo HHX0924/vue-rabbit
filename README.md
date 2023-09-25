@@ -73,4 +73,45 @@ npm run lint
 13.Home Banner轮播图实现和动态渲染 elementPlus 中 el-carousel
 14.面板组件封装 props传参 slot插槽
 15.新鲜好物业务实现
+
+16.图片懒加载指令实现 v-img-lazy
+  1.在main.js中定义全局指令
+  2.判断图片是否进入视口
+      使用vueuse中的函数useIntersectionObserver
+  优化
+    1.写在main.js中不合理 
+      把懒加载指令封装成插件 在main.js中只需注册即可
+    2.useIntersectionObserver 重复监听
+      调用stop方法
+      
+17.Product 产品列表实现
+18.封装gooditems 组件
+
+一级分类      
+    19.面包屑导航渲染
+    20.轮播图
+    21.菜单高亮 active-class="active"类名
+       分类列表渲染
+       
+    22.解决路由缓存
+      方案一: 给 RouterView 添加 key 属性 :key="$route.fullPath"    
+      方案二: onBeforeRouteUpdate ('性能更好,没有重复的请求')
+      
+    23.使用逻辑函数拆分业务
+      实现步骤:
+        1. 按照业务声明以 `use` 打头的逻辑函数
+        2. 把独立的业务逻辑封装到各个函数内部
+        3. 函数内部把组件中需要用到的数据或者方法return出去
+        4. 在组件中调用函数把数据或者方法组合回来使用
+        
+二级分类
+    24. 路由配置
+    25. 面包屑导航配置
+    26. 基础商品列表实现
+    27. 列表筛选功能 了解 el-tab 的api
+    28. 无限加载实现
+          触底条件满足之后 page++,拉取下一页数据
+          新老数据做数组拼接('展开运算符' ...)
+          判断是否已经全部加载完毕,停止监听 v-infinite-scroll
+        
 ```

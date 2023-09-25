@@ -5,7 +5,6 @@ import { ref } from 'vue'
 const newList = ref([])
 const getNewList = async () => {
   const res = await findNewAPI()
-  console.log(res)
   newList.value = res.result
 }
 getNewList()
@@ -16,7 +15,7 @@ getNewList()
     <ul class="goods-list">
       <li v-for="item in newList" :key="item.id">
         <RouterLink to="/">
-          <img :src="item.picture" alt="" />
+          <img v-img-lazy="item.picture" alt="" />
           <p class="name">{{ item.name }}</p>
           <p class="price">&yen;{{ item.price }}</p>
         </RouterLink>
@@ -35,7 +34,6 @@ getNewList()
   li {
     width: 306px;
     height: 406px;
-
     background: #f0f9f4;
     transition: all .5s;
 
