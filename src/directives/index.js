@@ -1,4 +1,4 @@
-import {useIntersectionObserver} from "@vueuse/core"
+import { useIntersectionObserver } from "@vueuse/core"
 export const lazyPlugin = {
     install(app){
         app.directive('img-lazy', {
