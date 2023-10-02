@@ -3,6 +3,7 @@ import { getDetail } from "@/apis/detail"
 import { ref, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import XtxSku from "@/components/XtxSku/index.vue"
+import DeatilHot from "@/views/Detail/components/DeatilHot.vue"
 const route = useRoute()
 const goods = ref({})
 const getGoods = async () => {

@@ -1,9 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from "vue-router"
-import { loginAPI } from "@/apis/user"
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
+
+import { useUserStore } from "@/stores/user"
+
+const userStore = useUserStore()
 // 表单数据对象
 const userInfo = ref({
   account: '12056258282',
@@ -36,7 +39,7 @@ const doLogin = () => {
   const { account, password } = userInfo.value
   formRef.value.validate(async (valid) => {
     if (valid) {
-      await loginAPI({ account, password })
+      await userStore.getUserInfo({account, password})
       // 1. 提示用户
       ElMessage({ type: 'success', message: '登录成功' })
       // 2. 跳转首页
