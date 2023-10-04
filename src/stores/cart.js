@@ -1,18 +1,18 @@
 import { defineStore } from "pinia"
 import { ref, computed } from "vue"
 import { useUserStore } from "@/stores/user"
-import { insertCartAPI, findNewCartListAPI } from "@/apis/cart"
+import { insertCartAPI, findNewCartListAPI, delCartAPI } from "@/apis/cart"
 
 export const useCartStore = defineStore('cart', () => {
   const userStore = useUserStore()
   const isLogin = computed(() => userStore.userInfo.token)
   const carList = ref([])
+  //加入购物车
   const addCart = async (goods) => {
     const { skuId, count } = goods
     if (isLogin.value) {
-      await insertCartAPI({skuId, count})
-      const res = await findNewCartListAPI()
-      carList.value = res.result
+      await insertCartAPI({ skuId, count })
+      await updateNewList()
     } else {
       const item = carList.value.find((item) => goods.skuId === item.skuId)
       if (item) {
@@ -22,8 +22,23 @@ export const useCartStore = defineStore('cart', () => {
       }
     }
   }
-  const delCart = (skuId) => {
-    carList.value = carList.value.filter((item) => item.skuId !== skuId)
+  //删除购物车
+  const delCart = async (skuId) => {
+    if (isLogin.value) {
+      await delCartAPI([skuId])
+      await updateNewList()
+    } else {
+      carList.value = carList.value.filter((item) => item.skuId !== skuId)
+    }
+  }
+  // 清楚购物车
+  const clearCart = () => {
+    carList.value = []
+  }
+  //获取最新购物车列表
+  const updateNewList = async () => {
+    const res = await findNewCartListAPI()
+    carList.value = res.result
   }
   // 计算属性
   // 1. 总的数量 所有项的count之和
@@ -56,7 +71,9 @@ export const useCartStore = defineStore('cart', () => {
     allCheck,
     isAll,
     selectedCount,
-    selectedPrice
+    selectedPrice,
+    clearCart,
+    updateNewList
   }
 },{
   persist: true
